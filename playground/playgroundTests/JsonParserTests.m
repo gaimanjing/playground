@@ -24,7 +24,7 @@
 }
 
 // 要求能读取标准json格式数据，进行格式化输出且带缩进
-- (void)testObject1 {
+- (void)testEmptyObject {
     // Given
     char* input = "{}";
     
@@ -40,5 +40,35 @@
     XCTAssert(strcmp(result, expectResult) == 0);
 }
 
+- (void)testEmptyArray {
+    // Given
+    char* input = "[]";
+    
+    // When
+    char* result = playJsonParser(input);
+    
+    char** pNextChar = NULL;
+    StPlayJsonNode* rootNode = playParserJsonStringToTree(input, &pNextChar);
+    
+    // Then
+    char* expectResult = "";
+    
+    XCTAssert(strcmp(result, expectResult) == 0);
+}
 
+- (void)testArray1 {
+    // Given
+    char* input = "[\"hello\"]";
+    
+    // When
+    char* result = playJsonParser(input);
+    
+    char** pNextChar = NULL;
+    StPlayJsonNode* rootNode = playParserJsonStringToTree(input, &pNextChar);
+    
+    // Then
+    char* expectResult = "";
+    
+    XCTAssert(strcmp(result, expectResult) == 0);
+}
 @end
