@@ -16,15 +16,29 @@
 char* playTrimSpace(char* input);
 char* playParseKey(char* input, char** ppNextChar);
 StPlayJsonNode* playParserJsonStringToTree(char* input, char** ppNextChar);
-void playPrintJsonTree(StPlayJsonNode* root);
+void playPrintJsonTree(StPlayJsonNode* root, FILE* outFile);
+
 StPlayJsonNode* playParseValue(char* input, char** ppNextChar);
 
 // MARK: - main
 char* playJsonParser(char* input) {
     char* pNextChar = NULL;
     StPlayJsonNode* root = playParserJsonStringToTree(input, &pNextChar);
-    playPrintJsonTree(root);
-    return NULL;
+    FILE* outFile = tmpfile();
+    playPrintJsonTree(root, outFile);
+    
+    fseek(outFile, 0L, SEEK_END);
+    long fileSize = ftell(outFile);
+    fseek(outFile, 0L, SEEK_SET);
+    
+    char* result = NULL;
+    if(fileSize > 0) {
+        result = malloc(fileSize);
+        fread(result, fileSize, 1, outFile);
+    }
+    fclose(outFile);
+    
+    return result;
 }
 
 // MARK: - Private, Parse
@@ -176,7 +190,7 @@ StPlayJsonNode* playParseValue(char* input, char** ppNextChar) {
     *ppNextChar = pNextChar;
     
     if(pCharStart && pCharEnd) {
-        int valueLen = pCharEnd - pCharStart;
+        long valueLen = pCharEnd - pCharStart;
         if(valueLen > 0) {
             char* value = malloc(valueLen + 1);
             memset(value, 0, valueLen + 1);
@@ -219,41 +233,60 @@ char* playTrimSpace(char* input) {
 }
 
 // MARK: - Format, Print
-void playPrintIndentation(int indentLevel) {
-    char* indentation = "\t";
+void playPrintIndentation(int indentLevel, FILE* outFile) {
+//    char* indentation = "\t";
+    char* indentation = "    ";
     while (indentLevel > 0) {
-        printf("%s", indentation);
+        fprintf(outFile, "%s", indentation);
         indentLevel--;
     }
 }
-void dfsPlayPrintJsonTree(StPlayJsonNode* root, int indentLevel) {
+
+void dfsPlayPrintJsonTree(StPlayJsonNode* root, int indentLevel, FILE* outFile) {
     if(root->valueType == PEObject) {
-        playPrintIndentation(indentLevel);
-        printf("{\n");
-        playPrintIndentation(indentLevel);
-        printf("}\n");
-        
-    } else if(root->valueType == PEArray) {
-        playPrintIndentation(indentLevel);
-        printf("[\n");
+        playPrintIndentation(indentLevel, outFile);
+        fprintf(outFile, "{");
         
         StPlayJsonNode* child = root->child;
+        
         while (child) {
-            dfsPlayPrintJsonTree(child, indentLevel+1);
+            fprintf(outFile, "\n");
+            
+            dfsPlayPrintJsonTree(child, indentLevel+1, outFile);
             
             if(child->nextSibling) {
-                printf("\n,\n");
+                fprintf(outFile, "\n,");
             }
             
             child = child->nextSibling;
         }
         
-        playPrintIndentation(indentLevel);
-        printf("]\n");
+        fprintf(outFile, "\n");
+        playPrintIndentation(indentLevel, outFile);
+        fprintf(outFile, "}");
+        
+    } else if(root->valueType == PEArray) {
+        playPrintIndentation(indentLevel, outFile);
+        fprintf(outFile, "[");
+        
+        StPlayJsonNode* child = root->child;
+        while (child) {
+            fprintf(outFile, "\n");
+            dfsPlayPrintJsonTree(child, indentLevel+1, outFile);
+            
+            if(child->nextSibling) {
+                fprintf(outFile, "\n,");
+            }
+            
+            child = child->nextSibling;
+        }
+        
+        playPrintIndentation(indentLevel, outFile);
+        fprintf(outFile, "\n]");
         
     } else if(root->valueType == PEBasic) {
-        playPrintIndentation(indentLevel);
-        printf("%s\n", (char*)root->value);
+        playPrintIndentation(indentLevel, outFile);
+        fprintf(outFile, "%s", (char*)root->value);
         
     } else {
         
@@ -261,8 +294,8 @@ void dfsPlayPrintJsonTree(StPlayJsonNode* root, int indentLevel) {
     
 }
 
-void playPrintJsonTree(StPlayJsonNode* root) {
+void playPrintJsonTree(StPlayJsonNode* root, FILE* outFile) {
     
-    dfsPlayPrintJsonTree(root, 0);
+    dfsPlayPrintJsonTree(root, 0, outFile);
     
 }

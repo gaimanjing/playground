@@ -31,11 +31,10 @@
     // When
     char* result = playJsonParser(input);
     
-    char** pNextChar = NULL;
-    StPlayJsonNode* rootNode = playParserJsonStringToTree(input, &pNextChar);
-    
     // Then
-    char* expectResult = "";
+    char* expectResult = "\
+{\n\
+}";
     
     XCTAssert(strcmp(result, expectResult) == 0);
 }
@@ -47,11 +46,10 @@
     // When
     char* result = playJsonParser(input);
     
-    char** pNextChar = NULL;
-    StPlayJsonNode* rootNode = playParserJsonStringToTree(input, &pNextChar);
-    
     // Then
-    char* expectResult = "";
+    char* expectResult = "\
+[\n\
+]";
     
     XCTAssert(strcmp(result, expectResult) == 0);
 }
@@ -63,11 +61,11 @@
     // When
     char* result = playJsonParser(input);
     
-    char** pNextChar = NULL;
-    StPlayJsonNode* rootNode = playParserJsonStringToTree(input, &pNextChar);
-    
     // Then
-    char* expectResult = "";
+    char* expectResult = "\
+[\n\
+    \"hello\"\n\
+]";
     
     XCTAssert(strcmp(result, expectResult) == 0);
 }
