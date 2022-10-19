@@ -12,22 +12,5 @@
 
 char* playJsonParser(char* input);
 
-// MARK: - struct
-typedef enum {
-    PEObject,
-    PEArray,
-    PEBasic,
-} PlayEJsonNodeType;
-
-typedef struct PlayJsonNode {
-    char* key;
-    
-    void* value;
-    PlayEJsonNodeType valueType;
-    
-    struct PlayJsonNode* child;
-    struct PlayJsonNode* nextSibling;
-} StPlayJsonNode;
-StPlayJsonNode* playParserJsonStringToTree(char* input, char** ppNextChar);
 
 #endif /* PlayJsonParser_h */

@@ -20,13 +20,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		BB0254B028FE94A400AD509E /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = BB02549628FE949B00AD509E /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = BB02549D28FE949B00AD509E;
-			remoteInfo = playground;
-		};
 		BB0254BA28FE94A400AD509E /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = BB02549628FE949B00AD509E /* Project object */;
@@ -181,7 +174,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				BB0254B128FE94A400AD509E /* PBXTargetDependency */,
 			);
 			name = playgroundTests;
 			productName = playgroundTests;
@@ -223,7 +215,6 @@
 					BB0254AE28FE94A400AD509E = {
 						CreatedOnToolsVersion = 14.0.1;
 						LastSwiftMigration = 1400;
-						TestTargetID = BB02549D28FE949B00AD509E;
 					};
 					BB0254B828FE94A400AD509E = {
 						CreatedOnToolsVersion = 14.0.1;
@@ -310,11 +301,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		BB0254B128FE94A400AD509E /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = BB02549D28FE949B00AD509E /* playground */;
-			targetProxy = BB0254B028FE94A400AD509E /* PBXContainerItemProxy */;
-		};
 		BB0254BB28FE94A400AD509E /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = BB02549D28FE949B00AD509E /* playground */;
@@ -513,7 +499,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -535,7 +520,6 @@
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/playground.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/playground";
 			};
 			name = Debug;
 		};
@@ -543,7 +527,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -564,7 +547,6 @@
 				SWIFT_OBJC_BRIDGING_HEADER = "playgroundTests/playgroundTests-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/playground.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/playground";
 			};
 			name = Release;
 		};

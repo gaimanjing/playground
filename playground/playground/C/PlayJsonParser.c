@@ -11,14 +11,33 @@
 #include <string.h>
 
 
+// MARK: - struct
+typedef enum {
+    PEObject,
+    PEArray,
+    PEBasic,
+    PEKeyValuePair,
+} PlayEJsonNodeType;
 
-// MARK: - declearation
+typedef struct PlayJsonNode {
+    char* key;
+    
+    PlayEJsonNodeType valueType;
+    void* value;
+    
+    struct PlayJsonNode* child;
+    struct PlayJsonNode* nextSibling;
+} StPlayJsonNode;
+
+// MARK: - function declearation
 char* playTrimSpace(char* input);
 char* playParseKey(char* input, char** ppNextChar);
 StPlayJsonNode* playParserJsonStringToTree(char* input, char** ppNextChar);
 void playPrintJsonTree(StPlayJsonNode* root, FILE* outFile);
 
 StPlayJsonNode* playParseValue(char* input, char** ppNextChar);
+int isSymbol(char cChar);
+int isWhiteSpace(char cChar);
 
 // MARK: - main
 char* playJsonParser(char* input) {
@@ -42,6 +61,7 @@ char* playJsonParser(char* input) {
 }
 
 // MARK: - Private, Parse
+// https://www.json.org/json-en.html
 StPlayJsonNode* playParserJsonStringToTree(char* input, char** ppNextChar) {
     if(NULL == input) {
         return NULL;
@@ -63,29 +83,40 @@ StPlayJsonNode* playParserJsonStringToTree(char* input, char** ppNextChar) {
         pRootNode = pNewNode;
         pChar++;
         while (*pChar != '}') {
-            pNewNode = (StPlayJsonNode*)malloc(sizeof(StPlayJsonNode));
-            memset(pNewNode, 0, sizeof(StPlayJsonNode));
-            
-            if(pPreSibling) {
-                pPreSibling->nextSibling = pNewNode;
-            }
-            
             char* pNextChar = NULL;
-            pNewNode->key = playParseKey(pChar, &pNextChar);
-            
-            pChar = pNextChar;
-            pNextChar = NULL;
-            pNewNode->value = playParserJsonStringToTree(pChar, &pNextChar);
-            
-            pChar = pNextChar;
-            pNextChar = NULL;
+            // key
+            char* key = playParseKey(pChar, &pNextChar);
+            if(key) {
+                StPlayJsonNode* pChild = (StPlayJsonNode*)malloc(sizeof(StPlayJsonNode));
+                memset(pChild, 0, sizeof(StPlayJsonNode));
+                pChild->valueType = PEKeyValuePair;
+                pChild->key = key;
+                
+                pChar = pNextChar;
+                pNextChar = NULL;
+                
+                // :
+                while (*pChar != ':') {
+                    pChar++;
+                }
+                pChar++;
+                
+                // value
+                pChild->value = playParserJsonStringToTree(pChar, &pNextChar);
+                
+                if(NULL == pRootNode->child) {
+                    pRootNode->child = pChild;
+                    pPreSibling = pChild;
+                } else if(pPreSibling) {
+                    pPreSibling->nextSibling = pChild;
+                    pPreSibling = pChild;
+                }
+            }
             
             // trim
             pChar = playTrimSpace(pNextChar);
             // ,
             if(*pChar == ',') {
-                pPreSibling = pNewNode;
-                
                 pChar++;
             }
         }
@@ -127,11 +158,44 @@ StPlayJsonNode* playParserJsonStringToTree(char* input, char** ppNextChar) {
 }
 
 char* playParseKey(char* input, char** ppNextChar) {
-    char* key = NULL;
+    // String
+    char* pCharStart = NULL;
+    char* pCharEnd = NULL;
     
+    char* pNextChar = input;
     
-    return key;
+    while (pNextChar) {
+        if(isWhiteSpace(*pNextChar)) {
+            pNextChar++;
+            
+        } else if(isSymbol(*pNextChar)) {
+            pCharEnd = pNextChar;
+            break;
+            
+        } else {
+            if(NULL == pCharStart) {
+                pCharStart = pNextChar;
+            }
+            pCharEnd = pNextChar;
+            
+            pNextChar++;
+        }
+    }
+    *ppNextChar = pNextChar;
+    
+    if(pCharStart && pCharEnd) {
+        long valueLen = pCharEnd - pCharStart;
+        if(valueLen > 0) {
+            char* value = malloc(valueLen + 1);
+            memset(value, 0, valueLen + 1);
+            strncpy(value, pCharStart, valueLen);
+            return value;
+        }
+    }
+    
+    return NULL;
 }
+
 int isSymbol(char cChar) {
     switch (cChar) {
         case '{':
@@ -139,6 +203,7 @@ int isSymbol(char cChar) {
         case '[':
         case ']':
         case ',':
+        case ':':
             return 1;
         
         default:
@@ -288,10 +353,18 @@ void dfsPlayPrintJsonTree(StPlayJsonNode* root, int indentLevel, FILE* outFile) 
         playPrintIndentation(indentLevel, outFile);
         fprintf(outFile, "%s", (char*)root->value);
         
+    } else if(root->valueType == PEKeyValuePair) {
+        playPrintIndentation(indentLevel, outFile);
+        fprintf(outFile, "%s: ", (char*)root->key);
+        StPlayJsonNode* valueNode = root->value;
+        if(valueNode->valueType == PEBasic) {
+            fprintf(outFile, "%s", (char*)valueNode->value);
+        } else {
+            // todo print value
+        }
     } else {
         
     }
-    
 }
 
 void playPrintJsonTree(StPlayJsonNode* root, FILE* outFile) {
