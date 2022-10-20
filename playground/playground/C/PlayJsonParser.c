@@ -9,7 +9,45 @@
 
 #include <stdlib.h>
 #include <string.h>
+#include <stdbool.h>
+#include <stdarg.h>
+#include <unistd.h>
 
+void _debugPrintf(FILE *stream, char *format, ...) {
+    va_list args;
+    va_start(args, format);
+    int ret = vfprintf(stream, format, args);
+    va_end(args);
+    
+    va_start(args, format);
+    ret = vprintf(format, args);
+    va_end(args);
+}
+
+int _getFileName(FILE* fp) {
+    int MAXSIZE = 0xFFF;
+    char proclnk[0xFFF];
+    char filename[0xFFF];
+    int fno;
+    ssize_t r;
+
+    // test.txt created earlier
+    if (fp != NULL)
+    {
+        fno = fileno(fp);
+        sprintf(proclnk, "/proc/self/fd/%d", fno);
+        r = readlink(proclnk, filename, MAXSIZE);
+        if (r < 0)
+        {
+            printf("failed to readlink\n");
+            exit(1);
+        }
+        filename[r] = '\0';
+        printf("fp -> fno -> filename: %p -> %d -> %s\n", fp, fno, filename);
+    }
+    
+    return 0;
+}
 
 // MARK: - struct
 typedef enum {
@@ -38,12 +76,17 @@ void playPrintJsonTree(StPlayJsonNode* root, FILE* outFile);
 StPlayJsonNode* playParseValue(char* input, char** ppNextChar);
 int isSymbol(char cChar);
 int isWhiteSpace(char cChar);
+void dfsPlayPrintJsonTree4(StPlayJsonNode* root, int indentLevel, FILE* outFile, bool lineBreak);
 
 // MARK: - main
 char* playJsonParser(char* input) {
     char* pNextChar = NULL;
     StPlayJsonNode* root = playParserJsonStringToTree(input, &pNextChar);
     FILE* outFile = tmpfile();
+    
+    ftruncate(fileno(outFile), 0);
+//    _getFileName(outFile);
+    
     playPrintJsonTree(root, outFile);
     
     fseek(outFile, 0L, SEEK_END);
@@ -52,8 +95,9 @@ char* playJsonParser(char* input) {
     
     char* result = NULL;
     if(fileSize > 0) {
-        result = malloc(fileSize);
+        result = malloc(fileSize+1);
         fread(result, fileSize, 1, outFile);
+        result[fileSize] = 0;
     }
     fclose(outFile);
     
@@ -106,11 +150,10 @@ StPlayJsonNode* playParserJsonStringToTree(char* input, char** ppNextChar) {
                 
                 if(NULL == pRootNode->child) {
                     pRootNode->child = pChild;
-                    pPreSibling = pChild;
                 } else if(pPreSibling) {
                     pPreSibling->nextSibling = pChild;
-                    pPreSibling = pChild;
                 }
+                pPreSibling = pChild;
             }
             
             // trim
@@ -121,7 +164,7 @@ StPlayJsonNode* playParserJsonStringToTree(char* input, char** ppNextChar) {
             }
         }
         
-        *ppNextChar = pChar++;
+        *ppNextChar = pChar + 1;
         
     } else if(*pChar == '[') { // Array
         StPlayJsonNode* pNewNode = (StPlayJsonNode*)malloc(sizeof(StPlayJsonNode));
@@ -135,10 +178,10 @@ StPlayJsonNode* playParserJsonStringToTree(char* input, char** ppNextChar) {
             StPlayJsonNode* child = playParserJsonStringToTree(pChar, &pNextChar);
             if(NULL == pNewNode->child) {
                 pNewNode->child = child;
-                pPreSibling = child;
             } else if (pPreSibling) {
                 pPreSibling->nextSibling = child;
             }
+            pPreSibling = child;
             
             
             // ,
@@ -148,6 +191,8 @@ StPlayJsonNode* playParserJsonStringToTree(char* input, char** ppNextChar) {
                 pChar++;
             }
         }
+        
+        *ppNextChar = pChar + 1;
         
     } else {
         pRootNode = playParseValue(input, ppNextChar);
@@ -302,65 +347,74 @@ void playPrintIndentation(int indentLevel, FILE* outFile) {
 //    char* indentation = "\t";
     char* indentation = "    ";
     while (indentLevel > 0) {
-        fprintf(outFile, "%s", indentation);
+        _debugPrintf(outFile, "%s", indentation);
         indentLevel--;
     }
 }
 
 void dfsPlayPrintJsonTree(StPlayJsonNode* root, int indentLevel, FILE* outFile) {
+    dfsPlayPrintJsonTree4(root, indentLevel, outFile, true);
+}
+
+void dfsPlayPrintJsonTree4(StPlayJsonNode* root, int indentLevel, FILE* outFile, bool lineBreak) {
     if(root->valueType == PEObject) {
-        playPrintIndentation(indentLevel, outFile);
-        fprintf(outFile, "{");
+        if (lineBreak) {
+            playPrintIndentation(indentLevel, outFile);
+        }
+        _debugPrintf(outFile, "{");
         
         StPlayJsonNode* child = root->child;
         
         while (child) {
-            fprintf(outFile, "\n");
+            _debugPrintf(outFile, "\n");
             
             dfsPlayPrintJsonTree(child, indentLevel+1, outFile);
             
             if(child->nextSibling) {
-                fprintf(outFile, "\n,");
+                _debugPrintf(outFile, ",");
             }
             
             child = child->nextSibling;
         }
         
-        fprintf(outFile, "\n");
+        _debugPrintf(outFile, "\n");
         playPrintIndentation(indentLevel, outFile);
-        fprintf(outFile, "}");
+        _debugPrintf(outFile, "}");
         
     } else if(root->valueType == PEArray) {
-        playPrintIndentation(indentLevel, outFile);
-        fprintf(outFile, "[");
+        if (lineBreak) {
+            playPrintIndentation(indentLevel, outFile);
+        }
+        _debugPrintf(outFile, "[");
         
         StPlayJsonNode* child = root->child;
         while (child) {
-            fprintf(outFile, "\n");
+            _debugPrintf(outFile, "\n");
             dfsPlayPrintJsonTree(child, indentLevel+1, outFile);
             
             if(child->nextSibling) {
-                fprintf(outFile, "\n,");
+                _debugPrintf(outFile, ",");
             }
             
             child = child->nextSibling;
         }
         
+        _debugPrintf(outFile, "\n");
         playPrintIndentation(indentLevel, outFile);
-        fprintf(outFile, "\n]");
+        _debugPrintf(outFile, "]");
         
     } else if(root->valueType == PEBasic) {
         playPrintIndentation(indentLevel, outFile);
-        fprintf(outFile, "%s", (char*)root->value);
+        _debugPrintf(outFile, "%s", (char*)root->value);
         
     } else if(root->valueType == PEKeyValuePair) {
         playPrintIndentation(indentLevel, outFile);
-        fprintf(outFile, "%s: ", (char*)root->key);
+        _debugPrintf(outFile, "%s: ", (char*)root->key);
         StPlayJsonNode* valueNode = root->value;
         if(valueNode->valueType == PEBasic) {
-            fprintf(outFile, "%s", (char*)valueNode->value);
+            dfsPlayPrintJsonTree(valueNode, 0, outFile);
         } else {
-            // todo print value
+            dfsPlayPrintJsonTree4(valueNode, indentLevel, outFile, false);
         }
     } else {
         

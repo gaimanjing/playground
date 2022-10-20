@@ -1,0 +1,23 @@
+[
+    1,
+    [
+        "x",
+        false,
+        789
+    ],
+    {
+        "obj1": {
+            "id": 123,
+            "key21": true
+        },
+        "key2": "value2",
+        "key3": [
+            456,
+            null,
+            false,
+            {
+                "key31": "hello"
+            }
+        ]
+    }
+]
