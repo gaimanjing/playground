@@ -19,6 +19,12 @@
 		BB3861002900DC0D0077F9A3 /* case11-input.json in Resources */ = {isa = PBXBuildFile; fileRef = BB3860FF2900DC0D0077F9A3 /* case11-input.json */; };
 		BB3861022900E9C50077F9A3 /* case21-input.json in Resources */ = {isa = PBXBuildFile; fileRef = BB3861012900E9C50077F9A3 /* case21-input.json */; };
 		BB3861042900E9D80077F9A3 /* case21-expect-result.json in Resources */ = {isa = PBXBuildFile; fileRef = BB3861032900E9D80077F9A3 /* case21-expect-result.json */; };
+		BB38610929011E8B0077F9A3 /* twitter.json in Resources */ = {isa = PBXBuildFile; fileRef = BB38610829011E8B0077F9A3 /* twitter.json */; };
+		BB38610B29011ECA0077F9A3 /* twitter-4tabspace.json in Resources */ = {isa = PBXBuildFile; fileRef = BB38610A29011ECA0077F9A3 /* twitter-4tabspace.json */; };
+		BB38610D290122A50077F9A3 /* case201-string-input.json in Resources */ = {isa = PBXBuildFile; fileRef = BB38610C290122A50077F9A3 /* case201-string-input.json */; };
+		BB38610F290123260077F9A3 /* case201-string-expect-result.json in Resources */ = {isa = PBXBuildFile; fileRef = BB38610E290123250077F9A3 /* case201-string-expect-result.json */; };
+		BB386112290127C10077F9A3 /* case202-output.json in Resources */ = {isa = PBXBuildFile; fileRef = BB386110290127C10077F9A3 /* case202-output.json */; };
+		BB386113290127C10077F9A3 /* case202-input.json in Resources */ = {isa = PBXBuildFile; fileRef = BB386111290127C10077F9A3 /* case202-input.json */; };
 		BBD687B928FE980D00DC3998 /* PlayJsonParser.c in Sources */ = {isa = PBXBuildFile; fileRef = BBD687B828FE980D00DC3998 /* PlayJsonParser.c */; };
 		BBD687BA28FE980D00DC3998 /* PlayJsonParser.c in Sources */ = {isa = PBXBuildFile; fileRef = BBD687B828FE980D00DC3998 /* PlayJsonParser.c */; };
 /* End PBXBuildFile section */
@@ -51,6 +57,12 @@
 		BB3860FF2900DC0D0077F9A3 /* case11-input.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "case11-input.json"; sourceTree = "<group>"; };
 		BB3861012900E9C50077F9A3 /* case21-input.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "case21-input.json"; sourceTree = "<group>"; };
 		BB3861032900E9D80077F9A3 /* case21-expect-result.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "case21-expect-result.json"; sourceTree = "<group>"; };
+		BB38610829011E8B0077F9A3 /* twitter.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = twitter.json; sourceTree = "<group>"; };
+		BB38610A29011ECA0077F9A3 /* twitter-4tabspace.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "twitter-4tabspace.json"; sourceTree = "<group>"; };
+		BB38610C290122A50077F9A3 /* case201-string-input.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "case201-string-input.json"; sourceTree = "<group>"; };
+		BB38610E290123250077F9A3 /* case201-string-expect-result.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "case201-string-expect-result.json"; sourceTree = "<group>"; };
+		BB386110290127C10077F9A3 /* case202-output.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "case202-output.json"; sourceTree = "<group>"; };
+		BB386111290127C10077F9A3 /* case202-input.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "case202-input.json"; sourceTree = "<group>"; };
 		BBD687B628FE980D00DC3998 /* playground-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "playground-Bridging-Header.h"; sourceTree = "<group>"; };
 		BBD687B728FE980D00DC3998 /* PlayJsonParser.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PlayJsonParser.h; sourceTree = "<group>"; };
 		BBD687B828FE980D00DC3998 /* PlayJsonParser.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = PlayJsonParser.c; sourceTree = "<group>"; };
@@ -155,10 +167,16 @@
 		BB3860FC2900D4250077F9A3 /* json */ = {
 			isa = PBXGroup;
 			children = (
-				BB3860FF2900DC0D0077F9A3 /* case11-input.json */,
 				BB3860FD2900D5330077F9A3 /* case11-expect-result.json */,
-				BB3861012900E9C50077F9A3 /* case21-input.json */,
+				BB3860FF2900DC0D0077F9A3 /* case11-input.json */,
 				BB3861032900E9D80077F9A3 /* case21-expect-result.json */,
+				BB3861012900E9C50077F9A3 /* case21-input.json */,
+				BB38610E290123250077F9A3 /* case201-string-expect-result.json */,
+				BB38610C290122A50077F9A3 /* case201-string-input.json */,
+				BB386111290127C10077F9A3 /* case202-input.json */,
+				BB386110290127C10077F9A3 /* case202-output.json */,
+				BB38610A29011ECA0077F9A3 /* twitter-4tabspace.json */,
+				BB38610829011E8B0077F9A3 /* twitter.json */,
 			);
 			path = json;
 			sourceTree = "<group>";
@@ -276,6 +294,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BB38610D290122A50077F9A3 /* case201-string-input.json in Resources */,
+				BB386113290127C10077F9A3 /* case202-input.json in Resources */,
+				BB38610929011E8B0077F9A3 /* twitter.json in Resources */,
+				BB38610F290123260077F9A3 /* case201-string-expect-result.json in Resources */,
+				BB38610B29011ECA0077F9A3 /* twitter-4tabspace.json in Resources */,
+				BB386112290127C10077F9A3 /* case202-output.json in Resources */,
 				BB3861022900E9C50077F9A3 /* case21-input.json in Resources */,
 				BB3861042900E9D80077F9A3 /* case21-expect-result.json in Resources */,
 				BB3861002900DC0D0077F9A3 /* case11-input.json in Resources */,

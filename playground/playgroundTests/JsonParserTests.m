@@ -129,9 +129,7 @@
     char* result = playJsonParser(input);
     
     // Then
-    char* expectResult = "\
-[\n\
-]";
+    char* expectResult = "[]";
     
     XCTAssert(strcmp(result, expectResult) == 0);
 }
@@ -186,6 +184,69 @@
     
     // Then
     NSString* expectFilePath = [[NSBundle bundleForClass:[self class]] pathForResource:@"case21-expect-result"
+                                                                                ofType:@"json"];
+    NSString* expect = [NSString stringWithContentsOfFile:expectFilePath
+                                                 encoding:(NSUTF8StringEncoding)
+                                                    error:&error];
+    const char* expectResult = expect.UTF8String;
+    
+    XCTAssert(strcmp(result, expectResult) == 0, @"%s is not expected, %s", result, expectResult);
+}
+    
+// MARK: - String
+- (void)testStingValue1 {
+    // Given
+    NSError* error;
+    NSString* inputFilePath = [[NSBundle bundleForClass:[self class]] pathForResource:@"case201-string-input"
+                                                                               ofType:@"json"];
+    NSString* inputOCString = [NSString stringWithContentsOfFile:inputFilePath
+                                                        encoding:(NSUTF8StringEncoding)
+                                                           error:&error];
+    const char* input = inputOCString.UTF8String;
+    
+    // When
+    char* result = playJsonParser(input);
+    
+    // Then
+    NSString* expectFilePath = [[NSBundle bundleForClass:[self class]] pathForResource:@"case201-string-expect-result"
+                                                                               ofType:@"json"];
+    NSString* expect = [NSString stringWithContentsOfFile:expectFilePath
+                                                 encoding:(NSUTF8StringEncoding)
+                                                    error:&error];
+    const char* expectResult = expect.UTF8String;
+    
+    XCTAssert(strcmp(result, expectResult) == 0, @"%s is not expected, %s", result, expectResult);
+}
+
+// MARK: - Helper
+- (void)testCase202 {
+    [self _testWithJsonFileName:@"case202-input"
+                    outFileName:@"case202-output"];
+}
+
+// MARK: - twitter json
+- (void)testTwitter1 {
+    [self _testWithJsonFileName:@"twitter"
+                    outFileName:@"twitter-4tabspace"];
+}
+
+// MARK: - Helper
+- (void)_testWithJsonFileName:(NSString*)inFileName
+                  outFileName:(NSString*)outFileName {
+    // Given
+    NSError* error;
+    NSString* inputFilePath = [[NSBundle bundleForClass:[self class]] pathForResource:inFileName
+                                                                               ofType:@"json"];
+    NSString* inputOCString = [NSString stringWithContentsOfFile:inputFilePath
+                                                        encoding:(NSUTF8StringEncoding)
+                                                           error:&error];
+    const char* input = inputOCString.UTF8String;
+    
+    // When
+    char* result = playJsonParser(input);
+    
+    // Then
+    NSString* expectFilePath = [[NSBundle bundleForClass:[self class]] pathForResource:outFileName
                                                                                ofType:@"json"];
     NSString* expect = [NSString stringWithContentsOfFile:expectFilePath
                                                  encoding:(NSUTF8StringEncoding)

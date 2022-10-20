@@ -280,12 +280,12 @@ StPlayJsonNode* playParseValue(char* input, char** ppNextChar) {
     
     char* pNextChar = input;
     
+    bool inString = false;
     while (pNextChar) {
         if(isWhiteSpace(*pNextChar)) {
             pNextChar++;
             
-        } else if(isSymbol(*pNextChar)) {
-            pCharEnd = pNextChar;
+        } else if( !inString && isSymbol(*pNextChar)) {
             break;
             
         } else {
@@ -294,13 +294,25 @@ StPlayJsonNode* playParseValue(char* input, char** ppNextChar) {
             }
             pCharEnd = pNextChar;
             
+            
+            if(*pNextChar == '"') {
+                if(!inString) {
+                    inString = true;
+                    
+                } else {
+                    if(*(pNextChar-1) != '\\') {
+                        inString = false;
+                    }
+                }
+            }
+            
             pNextChar++;
         }
     }
     *ppNextChar = pNextChar;
     
     if(pCharStart && pCharEnd) {
-        long valueLen = pCharEnd - pCharStart;
+        long valueLen = pCharEnd - pCharStart + 1;
         if(valueLen > 0) {
             char* value = malloc(valueLen + 1);
             memset(value, 0, valueLen + 1);
@@ -399,8 +411,10 @@ void dfsPlayPrintJsonTree4(StPlayJsonNode* root, int indentLevel, FILE* outFile,
             child = child->nextSibling;
         }
         
-        _debugPrintf(outFile, "\n");
-        playPrintIndentation(indentLevel, outFile);
+        if (root->child) {
+            _debugPrintf(outFile, "\n");
+            playPrintIndentation(indentLevel, outFile);
+        }
         _debugPrintf(outFile, "]");
         
     } else if(root->valueType == PEBasic) {
