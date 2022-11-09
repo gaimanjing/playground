@@ -32,6 +32,9 @@
 		BB3DE50C291A35B900AD357F /* e2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BB3DE509291A35B900AD357F /* e2.cpp */; };
 		BB3DE50F291A42A800AD357F /* e11.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BB3DE50D291A42A800AD357F /* e11.cpp */; };
 		BB3DE510291A42A800AD357F /* e11.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BB3DE50D291A42A800AD357F /* e11.cpp */; };
+		BB798CEC291B89AA006AEDED /* m9.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BB798CEA291B89AA006AEDED /* m9.cpp */; };
+		BB798CED291B89AA006AEDED /* m9.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BB798CEA291B89AA006AEDED /* m9.cpp */; };
+		BB798CF0291B8FEE006AEDED /* unique_ptr_tests.mm in Sources */ = {isa = PBXBuildFile; fileRef = BB798CEF291B8FEE006AEDED /* unique_ptr_tests.mm */; };
 		BBD687B928FE980D00DC3998 /* PlayJsonParser.c in Sources */ = {isa = PBXBuildFile; fileRef = BBD687B828FE980D00DC3998 /* PlayJsonParser.c */; };
 		BBD687BA28FE980D00DC3998 /* PlayJsonParser.c in Sources */ = {isa = PBXBuildFile; fileRef = BBD687B828FE980D00DC3998 /* PlayJsonParser.c */; };
 /* End PBXBuildFile section */
@@ -77,6 +80,9 @@
 		BB3DE50A291A35B900AD357F /* e2.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = e2.hpp; sourceTree = "<group>"; };
 		BB3DE50D291A42A800AD357F /* e11.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = e11.cpp; sourceTree = "<group>"; };
 		BB3DE50E291A42A800AD357F /* e11.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = e11.hpp; sourceTree = "<group>"; };
+		BB798CEA291B89AA006AEDED /* m9.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = m9.cpp; sourceTree = "<group>"; };
+		BB798CEB291B89AA006AEDED /* m9.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = m9.hpp; sourceTree = "<group>"; };
+		BB798CEF291B8FEE006AEDED /* unique_ptr_tests.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = unique_ptr_tests.mm; sourceTree = "<group>"; };
 		BBD687B628FE980D00DC3998 /* playground-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "playground-Bridging-Header.h"; sourceTree = "<group>"; };
 		BBD687B728FE980D00DC3998 /* PlayJsonParser.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PlayJsonParser.h; sourceTree = "<group>"; };
 		BBD687B828FE980D00DC3998 /* PlayJsonParser.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = PlayJsonParser.c; sourceTree = "<group>"; };
@@ -130,6 +136,7 @@
 		BB0254A028FE949B00AD509E /* playground */ = {
 			isa = PBXGroup;
 			children = (
+				BB798CE9291B7B4C006AEDED /* More Effective C++ */,
 				BB3DE502291A328800AD357F /* Effective-C++ */,
 				BB0254CF28FE95D600AD509E /* C */,
 				BB0254A128FE949B00AD509E /* playgroundApp.swift */,
@@ -152,6 +159,7 @@
 		BB0254B228FE94A400AD509E /* playgroundTests */ = {
 			isa = PBXGroup;
 			children = (
+				BB798CEE291B8FC7006AEDED /* cpp */,
 				BB3860FC2900D4250077F9A3 /* json */,
 				BB0254B328FE94A400AD509E /* playgroundTests.swift */,
 				BB0254CC28FE955300AD509E /* playgroundTests-Bridging-Header.h */,
@@ -208,6 +216,23 @@
 				BB3DE50E291A42A800AD357F /* e11.hpp */,
 			);
 			path = "Effective-C++";
+			sourceTree = "<group>";
+		};
+		BB798CE9291B7B4C006AEDED /* More Effective C++ */ = {
+			isa = PBXGroup;
+			children = (
+				BB798CEA291B89AA006AEDED /* m9.cpp */,
+				BB798CEB291B89AA006AEDED /* m9.hpp */,
+			);
+			path = "More Effective C++";
+			sourceTree = "<group>";
+		};
+		BB798CEE291B8FC7006AEDED /* cpp */ = {
+			isa = PBXGroup;
+			children = (
+				BB798CEF291B8FEE006AEDED /* unique_ptr_tests.mm */,
+			);
+			path = cpp;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -352,6 +377,7 @@
 			files = (
 				BB3DE50B291A35B900AD357F /* e2.cpp in Sources */,
 				BB0254A428FE949B00AD509E /* ContentView.swift in Sources */,
+				BB798CEC291B89AA006AEDED /* m9.cpp in Sources */,
 				BB3DE505291A32B900AD357F /* e1.cpp in Sources */,
 				BB3DE50F291A42A800AD357F /* e11.cpp in Sources */,
 				BB0254A228FE949B00AD509E /* playgroundApp.swift in Sources */,
@@ -368,8 +394,10 @@
 				BB3DE510291A42A800AD357F /* e11.cpp in Sources */,
 				BB3DE506291A32B900AD357F /* e1.cpp in Sources */,
 				BB0254B428FE94A400AD509E /* playgroundTests.swift in Sources */,
+				BB798CED291B89AA006AEDED /* m9.cpp in Sources */,
 				BB3DE50C291A35B900AD357F /* e2.cpp in Sources */,
 				BBD687BA28FE980D00DC3998 /* PlayJsonParser.c in Sources */,
+				BB798CF0291B8FEE006AEDED /* unique_ptr_tests.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
