@@ -35,6 +35,11 @@
 		BB798CEC291B89AA006AEDED /* m9.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BB798CEA291B89AA006AEDED /* m9.cpp */; };
 		BB798CED291B89AA006AEDED /* m9.cpp in Sources */ = {isa = PBXBuildFile; fileRef = BB798CEA291B89AA006AEDED /* m9.cpp */; };
 		BB798CF0291B8FEE006AEDED /* unique_ptr_tests.mm in Sources */ = {isa = PBXBuildFile; fileRef = BB798CEF291B8FEE006AEDED /* unique_ptr_tests.mm */; };
+		BB798D04291E2517006AEDED /* vector_tests.mm in Sources */ = {isa = PBXBuildFile; fileRef = BB798D03291E2517006AEDED /* vector_tests.mm */; };
+		BB798D09291E2764006AEDED /* 9_sequence_container_tests.mm in Sources */ = {isa = PBXBuildFile; fileRef = BB798D08291E2764006AEDED /* 9_sequence_container_tests.mm */; };
+		BB798D0C291E3A3F006AEDED /* promise_tests.mm in Sources */ = {isa = PBXBuildFile; fileRef = BB798D0B291E3A3F006AEDED /* promise_tests.mm */; };
+		BB798D0E291E3F3B006AEDED /* future_tests.mm in Sources */ = {isa = PBXBuildFile; fileRef = BB798D0D291E3F3B006AEDED /* future_tests.mm */; };
+		BB798D10291E443F006AEDED /* async_tests.mm in Sources */ = {isa = PBXBuildFile; fileRef = BB798D0F291E443F006AEDED /* async_tests.mm */; };
 		BBD687B928FE980D00DC3998 /* PlayJsonParser.c in Sources */ = {isa = PBXBuildFile; fileRef = BBD687B828FE980D00DC3998 /* PlayJsonParser.c */; };
 		BBD687BA28FE980D00DC3998 /* PlayJsonParser.c in Sources */ = {isa = PBXBuildFile; fileRef = BBD687B828FE980D00DC3998 /* PlayJsonParser.c */; };
 /* End PBXBuildFile section */
@@ -83,6 +88,11 @@
 		BB798CEA291B89AA006AEDED /* m9.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = m9.cpp; sourceTree = "<group>"; };
 		BB798CEB291B89AA006AEDED /* m9.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = m9.hpp; sourceTree = "<group>"; };
 		BB798CEF291B8FEE006AEDED /* unique_ptr_tests.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = unique_ptr_tests.mm; sourceTree = "<group>"; };
+		BB798D03291E2517006AEDED /* vector_tests.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = vector_tests.mm; sourceTree = "<group>"; };
+		BB798D08291E2764006AEDED /* 9_sequence_container_tests.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = 9_sequence_container_tests.mm; sourceTree = "<group>"; };
+		BB798D0B291E3A3F006AEDED /* promise_tests.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = promise_tests.mm; sourceTree = "<group>"; };
+		BB798D0D291E3F3B006AEDED /* future_tests.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = future_tests.mm; sourceTree = "<group>"; };
+		BB798D0F291E443F006AEDED /* async_tests.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = async_tests.mm; sourceTree = "<group>"; };
 		BBD687B628FE980D00DC3998 /* playground-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "playground-Bridging-Header.h"; sourceTree = "<group>"; };
 		BBD687B728FE980D00DC3998 /* PlayJsonParser.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PlayJsonParser.h; sourceTree = "<group>"; };
 		BBD687B828FE980D00DC3998 /* PlayJsonParser.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = PlayJsonParser.c; sourceTree = "<group>"; };
@@ -230,9 +240,46 @@
 		BB798CEE291B8FC7006AEDED /* cpp */ = {
 			isa = PBXGroup;
 			children = (
+				BB798D0A291E3A2D006AEDED /* Concurrency */,
+				BB798D05291E26F6006AEDED /* C++ Primer */,
+				BB798D01291E24D7006AEDED /* Container */,
 				BB798CEF291B8FEE006AEDED /* unique_ptr_tests.mm */,
 			);
 			path = cpp;
+			sourceTree = "<group>";
+		};
+		BB798D01291E24D7006AEDED /* Container */ = {
+			isa = PBXGroup;
+			children = (
+				BB798D02291E24FE006AEDED /* Sequence */,
+			);
+			path = Container;
+			sourceTree = "<group>";
+		};
+		BB798D02291E24FE006AEDED /* Sequence */ = {
+			isa = PBXGroup;
+			children = (
+				BB798D03291E2517006AEDED /* vector_tests.mm */,
+			);
+			path = Sequence;
+			sourceTree = "<group>";
+		};
+		BB798D05291E26F6006AEDED /* C++ Primer */ = {
+			isa = PBXGroup;
+			children = (
+				BB798D08291E2764006AEDED /* 9_sequence_container_tests.mm */,
+			);
+			path = "C++ Primer";
+			sourceTree = "<group>";
+		};
+		BB798D0A291E3A2D006AEDED /* Concurrency */ = {
+			isa = PBXGroup;
+			children = (
+				BB798D0B291E3A3F006AEDED /* promise_tests.mm */,
+				BB798D0D291E3F3B006AEDED /* future_tests.mm */,
+				BB798D0F291E443F006AEDED /* async_tests.mm */,
+			);
+			path = Concurrency;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -389,15 +436,20 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BB798D0E291E3F3B006AEDED /* future_tests.mm in Sources */,
 				BB3DE508291A33D400AD357F /* EffectiveC++Tests.mm in Sources */,
+				BB798D10291E443F006AEDED /* async_tests.mm in Sources */,
 				BB0254D128FE960500AD509E /* JsonParserTests.m in Sources */,
 				BB3DE510291A42A800AD357F /* e11.cpp in Sources */,
 				BB3DE506291A32B900AD357F /* e1.cpp in Sources */,
 				BB0254B428FE94A400AD509E /* playgroundTests.swift in Sources */,
 				BB798CED291B89AA006AEDED /* m9.cpp in Sources */,
 				BB3DE50C291A35B900AD357F /* e2.cpp in Sources */,
+				BB798D0C291E3A3F006AEDED /* promise_tests.mm in Sources */,
 				BBD687BA28FE980D00DC3998 /* PlayJsonParser.c in Sources */,
+				BB798D04291E2517006AEDED /* vector_tests.mm in Sources */,
 				BB798CF0291B8FEE006AEDED /* unique_ptr_tests.mm in Sources */,
+				BB798D09291E2764006AEDED /* 9_sequence_container_tests.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
